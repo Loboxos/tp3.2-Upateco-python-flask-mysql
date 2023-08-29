@@ -1,20 +1,25 @@
-## python -m venv <nombre_del_entorno>
+## Creacion del entorno virtual y requerimientos
 
-## <nombre_del_entorno>\Scripts\activate
+```cmd
+python -m venv <nombre_del_entorno>
 
-## pip freeze > requirements.txt o pip install -r requirements.txt para instalar
+<nombre_del_entorno>\Scripts\activate
 
-## pip install flask 
+pip freeze > requirements.txt o pip install -r requirements.txt para instalar
 
+pip install flask 
+```
 ## creacion carpetas + estruc
-/../Ejercicios_tp3_2/
-|-- app/
-| |-- static/
-| |-- __init__.py
-| |-- database.py
-| config.py
-| run.py
+/../Ejercicios_tp3_2/  
+***|-- app/***    
+  - **| |-- static|**
+  - **| |-- __init__.py||**  
+  - **| |-- database.py||**  
+
+***|--config.py***   
+***|--run.py***
 
 # instalador conector MySql
-
-## pip install mysql-connector-python.
+```cmd
+pip install mysql-connector-python.
+```

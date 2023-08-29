@@ -1,8 +1,36 @@
 import mysql.connector
-connection = mysql.connector.connect(
- host='127.0.0.1',
- user='my_user',
- port = "3306",
- password='my_pass',
- database='my_database'
- )
+class DatabaseConnection:
+ _connection = None
+ @classmethod
+ def get_connection(cls):
+    if cls._connection is None:
+        cls._connection = mysql.connector.connect(
+           host='127.0.0.1',
+            user='cristian',
+            port = "3306",
+            password='0912',
+            database='sales'
+            )
+    return cls._connection
+
+ @classmethod
+ def execute_query(cls, query, params=None):
+    cursor = cls.get_connection().cursor()
+    cursor.execute(query, params)
+    cls._connection.commit()
+    return cursor
+ @classmethod
+ def fetch_one(cls, query, params=None):
+    cursor = cls.get_connection().cursor()
+    cursor.execute(query, params)
+    return cursor.fetchone()
+ @classmethod
+ def fetch_all(cls, query, params=None):
+    cursor = cls.get_connection().cursor()
+    cursor.execute(query, params)
+    return cursor.fetchall()
+ @classmethod
+ def close_connection(cls):
+    if cls._connection is not None:
+        cls._connection.close()
+        cls._connection = None
