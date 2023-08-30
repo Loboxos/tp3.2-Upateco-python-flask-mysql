@@ -23,3 +23,13 @@ pip install flask
 ```cmd
 pip install mysql-connector-python.
 ```
+
+### CONSULTAS
+EJ 1.3
+![image](https://github.com/Loboxos/tp3.2-Upateco-python-flask-mysql/assets/100051726/e2ef49b2-e08a-4519-9b0c-18ee472800b5)
+
+EJ 2.1
+![image](https://github.com/Loboxos/tp3.2-Upateco-python-flask-mysql/assets/100051726/2ffb5ef7-0655-4e67-9ef7-05ae0f41d768)
+
+EJ 2.3
+![image](https://github.com/Loboxos/tp3.2-Upateco-python-flask-mysql/assets/100051726/3c2e2601-b192-4649-babc-fc3596738637)
