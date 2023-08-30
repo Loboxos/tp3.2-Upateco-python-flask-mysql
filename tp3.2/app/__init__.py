@@ -1,6 +1,8 @@
 from flask import Flask,request,jsonify
 from config import Config
 from .database import DatabaseConnection
+from .routes.products_bp import product_bp
+
 from .models import products
 
 def init_app():
@@ -9,6 +11,9 @@ def init_app():
  app = Flask(__name__, static_folder = Config.STATIC_FOLDER, template_folder = Config.TEMPLATE_FOLDER)
 
  app.config.from_object(Config)
+ app.register_blueprint(product_bp)
+
+
  @app.route('/')
  def saludar():
     return "Inicio de la App"
@@ -53,20 +58,6 @@ def init_app():
     else:
         return jsonify({"error": "Producto no encontrado"}), 404
  
- @app.route('/products', methods=['POST'])
- def create_product():
-    data = request.json
-    product = products.products.create_product(
-        product_name=data.get('product_name'),
-        brand_id=data.get('brand_id'),
-        category_id=data.get('category_id'),
-        model_year=data.get('model_year'),
-        list_price=data.get('list_price')
-    )
-    if product:
-        return jsonify({}), 201
-    else:
-        return jsonify({"error": "Error al registrar el producto"}), 500
 
 
  return app
