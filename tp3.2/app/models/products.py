@@ -42,17 +42,16 @@ class products:
             return None
 
     @classmethod
-    def create_product(cls, product_name, brand_id, category_id, model_year, list_price):
+    def create_product(cls, product):
         query = '''
         INSERT INTO products (product_name, brand_id, category_id, model_year, list_price)
         VALUES (%s, %s, %s, %s, %s)
         '''
-        values = (product_name, brand_id, category_id, model_year, list_price)
+        values = (product.product_name, product.brand, product.category, product.model_year, product.list_price)
 
         connection = DatabaseConnection.get_connection()
         cursor = connection.cursor()
         cursor.execute(query, values)
         connection.commit()
         cursor.close()
-        connection.close()
         return True

@@ -3,8 +3,6 @@ from config import Config
 from .database import DatabaseConnection
 from .routes.products_bp import product_bp
 
-from .models import products
-
 def init_app():
  """Crea y configura la aplicación Flask"""
 
@@ -12,12 +10,13 @@ def init_app():
 
  app.config.from_object(Config)
  app.register_blueprint(product_bp)
-
-
+ 
+ #saludo de inicio
  @app.route('/')
  def saludar():
     return "Inicio de la App"
- #api sin modelo 
+
+ #api sin MVC 
  @app.route('/customers',methods=['POST'])
  def registrar_cliente():
    body_params = request.json
@@ -34,30 +33,5 @@ def init_app():
     )
    DatabaseConnection.execute_query(query, params)
    return jsonify({ }), 201
-
- @app.route('/products/<int:product_id>', methods=['GET'])
- def get_product(product_id):
-    product = models.products.products.get_product_by_id(product_id) 
-    if product:
-        response = {
-            "brand": {
-                "brand_id": product.brand["brand_id"],
-                "brand_name": product.brand["brand_name"]
-            },
-            "category": {
-                "category_id": product.category["category_id"],
-                "category_name": product.category["category_name"]
-            },
-            "list_price": str(product.list_price),
-            "model_year": product.model_year,
-            "product_id": product.product_id,
-            "product_name": product.product_name
-        }
-        
-        return jsonify(response), 200
-    else:
-        return jsonify({"error": "Producto no encontrado"}), 404
  
-
-
  return app
