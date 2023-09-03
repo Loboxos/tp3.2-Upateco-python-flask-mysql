@@ -7,7 +7,8 @@ class products:
         self.category = category
         self.model_year = model_year
         self.list_price = list_price
-
+    def __str__(self):
+        return f"{self.product_name},{self.brand},{self.category},{self.model_year}"
     @classmethod
     def get_product_by_id(cls, producto_id):
         query = '''
@@ -87,3 +88,27 @@ class products:
                     })
 
                 return products_list
+    
+    
+    @classmethod
+    def guardar_cambios_en_db(cls, product):
+        query = '''
+        UPDATE products
+        SET product_name = %s, brand_id = %s, category_id = %s, model_year = %s, list_price = %s
+        WHERE product_id = %s
+        '''
+        values = (
+            product.product_name,
+            product.brand.get('brand_id'),  
+            product.category.get('category_id'),  
+            product.model_year,
+            product.list_price,
+            product.product_id
+        )
+        connection = DatabaseConnection.get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, values)
+        connection.commit()  
+        cursor.close()
+        return True
+        

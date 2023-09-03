@@ -63,3 +63,30 @@ class productController:
             response.append(product_data)
 
         return jsonify(response), 200
+   
+   
+    @classmethod
+    def modificar_producto(cls, product_id):
+        data = request.json
+
+        product = products.get_product_by_id(product_id)
+
+        if not product:
+            return jsonify({"error": "Producto no encontrado"}), 404
+
+        if 'product_name' in data:
+            product.product_name = data['product_name']
+        if 'brand_id' in data:
+            product.brand['brand_id'] = data['brand_id']
+        if 'category_id' in data:
+            product.category['category_id'] = data['category_id']
+        if 'model_year' in data:
+            product.model_year = data['model_year']
+        if 'list_price' in data:
+            product.list_price = data['list_price']
+
+        if product.guardar_cambios_en_db(product):  
+            return jsonify({}), 200
+        else:
+            return jsonify({"error": "Error al guardar los cambios"}), 500
+
