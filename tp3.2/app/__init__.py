@@ -33,5 +33,30 @@ def init_app():
     )
    DatabaseConnection.execute_query(query, params)
    return jsonify({ }), 201
- 
+  
+  #Ejercicio1.4
+ @app.route('/customers/<int:customer_id>', methods = ['PUT'])
+ def update_customer(customer_id):
+    data = request.json 
+    if "email" in data and "phone" in data:
+        query = "UPDATE sales.customers SET email = %s, phone = %s WHERE customer_id = %s"
+        params = (data["email"], data["phone"], customer_id)
+
+        result = DatabaseConnection.execute_query(query, params)
+
+        if result:
+            return {"msg": "Customer updated"}, 200
+
+    return {"msg": "Invalid data or Customer not found"}, 400
+  #Ejercicio1.5
+ @app.route('/delete/customers/<int:customer_id>', methods=['DELETE'])
+ def delete_customer(customer_id):
+        query = "DELETE FROM sales.customers WHERE customer_id = %s;"
+        params = (customer_id,)
+        print(params)
+        result = DatabaseConnection.execute_query(query, params)      
+        if result is not None:
+            return {"msg": "Customer deleted"}, 204
+        else:
+            return {"error": "Customer not found"}, 404
  return app
